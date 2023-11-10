@@ -14,19 +14,19 @@ public class ValidationTest {
     @Test
     void validateDayInRange_테스트() {
         // given
-        List<Integer> case1 = List.of(1,2,3);
-        List<Integer> case2 = List.of(0);
-        List<Integer> case3 = List.of(31,32);
+        int case1 = 1;
+        int case2 = 32;
+        int case3 = 0;
 
         // when
         Throwable result1 =  catchThrowable(() ->{
-            Validation.validateDayInRange(case1.get(0),case1.get(1),case1.get(2));
+            Validation.validateDayInRange(case1);
         });
         Throwable result2 =  catchThrowable(() ->{
-            Validation.validateDayInRange(case2.get(0));
+            Validation.validateDayInRange(case2);
         });
         Throwable result3 =  catchThrowable(() ->{
-            Validation.validateDayInRange(case3.get(0),case3.get(1));
+            Validation.validateDayInRange(case3);
         });
 
         // then
