@@ -20,13 +20,13 @@ public class ValidationTest {
 
         // when
         Throwable result1 =  catchThrowable(() ->{
-            Validator.validateDayInRange(case1.get(0),case1.get(1),case1.get(2));
+            Validation.validateDayInRange(case1.get(0),case1.get(1),case1.get(2));
         });
         Throwable result2 =  catchThrowable(() ->{
-            Validator.validateDayInRange(case2.get(0));
+            Validation.validateDayInRange(case2.get(0));
         });
         Throwable result3 =  catchThrowable(() ->{
-            Validator.validateDayInRange(case3.get(0),case3.get(1));
+            Validation.validateDayInRange(case3.get(0),case3.get(1));
         });
 
         // then
