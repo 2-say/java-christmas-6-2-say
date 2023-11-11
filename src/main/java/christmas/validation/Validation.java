@@ -8,5 +8,13 @@ public final class Validation {
         }
     }
 
+    public static void validateStringToInteger(String input) {
+        if (!input.chars().allMatch(Character::isDigit)) {
+            throw new IllegalArgumentException();
+        }
+    }
+
+
+
 
 }
