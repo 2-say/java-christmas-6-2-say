@@ -2,11 +2,11 @@ package christmas.service;
 
 import christmas.domain.Bilge;
 import christmas.domain.discount.DiscountPolicy;
+import christmas.domain.discount.SpecialDiscountPolicy;
 import christmas.domain.discount.WeekdayDiscountPolicy;
 import christmas.domain.discount.WeekendDiscountPolicy;
 import christmas.utils.DateUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class DiscountService {
@@ -28,7 +28,11 @@ public class DiscountService {
         }
 
         if (DateUtils.isStarDay(bilge.getDate())) {
-//            discountPolicies.add(new SpecialDiscountPolicy());
+            discountPolicies.add(new SpecialDiscountPolicy());
         }
+
+
+
+
     }
 }
