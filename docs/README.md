@@ -12,7 +12,7 @@
   - [x] (출력 - 모두 입력 후) 12월 26일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!
 ####
 - [ ] 메뉴
-  - [ ] (출력) 주문하실 메뉴와 개수를 알려 주세요.
+  - [x] (출력) 주문하실 메뉴와 개수를 알려 주세요.
   - [ ] (예외 처리-메뉴없음) [ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.
   - [ ] (예외 처리-메뉴 개수 범위제한) [ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.
   - [ ] (예외 처리-메뉴 형식 제한) [ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.
@@ -73,3 +73,29 @@
 - [ ] InputView , OutputView 사용 
 - [ ] 입력 오류 시 IllegalArgumentException 발생 
 - [ ] 입력 오류 시 "[ERROR]"로 시작하는 에러 메시지를 출력 
+
+
+
+
+
+# 클래스 구조도
+
+
+```mermaid
+classDiagram
+
+  DiscountPolicy <.. WeekendDiscountPolicy
+  DiscountPolicy <.. WeekdayDiscountPolicy
+  DiscountPolicy <.. SpecialDiscountPolicy
+  DiscountPolicy <.. ChristmasDiscountPolicy
+  
+  Service --> DiscountPolicy
+  
+  class DiscountPolicy {
+      <<interface>>
+  }
+  
+  
+
+    
+```
