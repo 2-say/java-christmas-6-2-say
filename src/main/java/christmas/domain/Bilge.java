@@ -15,4 +15,8 @@ public class Bilge {
     public List<Menu> getBilge() {
         return bilge;
     }
+
+    public LocalDate getDate() {
+        return date;
+    }
 }
