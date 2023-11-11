@@ -19,4 +19,10 @@ public class Bilge {
     public LocalDate getDate() {
         return date;
     }
+
+    public int getTotalPrice() {
+        return bilge.stream().mapToInt(Menu::getPrice).sum();
+    }
+
+
 }
