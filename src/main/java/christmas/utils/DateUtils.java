@@ -11,7 +11,7 @@ public class DateUtils {
     }
 
     public static boolean isWeekday(LocalDate date) {
-        return getDayOfWeekValue(date) >= DayOfWeek.MONDAY.getValue() &&
+        return getDayOfWeekValue(date) >= DayOfWeek.SUNDAY.getValue() &&
                 getDayOfWeekValue(date) <= DayOfWeek.THURSDAY.getValue();
     }
 
@@ -30,6 +30,6 @@ public class DateUtils {
     }
 
     public static boolean isStarDay(LocalDate date) {
-        return getDayOfWeekValue(date) == DayOfWeek.SUNDAY.getValue() && date.getDayOfMonth() == 25;
+        return getDayOfWeekValue(date) == DayOfWeek.SUNDAY.getValue() || date.getDayOfMonth() == 25;
     }
 }
