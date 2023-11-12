@@ -1,19 +1,22 @@
 package christmas.domain;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Bilge {
     private LocalDate date;
-    private List<Menu> bilge;
+    private Map<Menu, Integer> bilgeMap;
 
-    public Bilge(LocalDate date, List<Menu> bilge) {
+    public Bilge(LocalDate date, Map<Menu, Integer> bilgeMap) {
         this.date = date;
-        this.bilge = bilge;
+        this.bilgeMap = bilgeMap;
     }
 
-    public List<Menu> getBilge() {
-        return bilge;
+    public Map<Menu, Integer> getBilge() {
+        return bilgeMap;
     }
 
     public LocalDate getDate() {
@@ -21,8 +24,17 @@ public class Bilge {
     }
 
     public int getTotalPrice() {
-        return bilge.stream().mapToInt(Menu::getPrice).sum();
+        return bilgeMap.entrySet().stream()
+                .mapToInt(entry -> entry.getKey().getPrice() * entry.getValue())
+                .sum();
     }
 
+    private Map<Menu, Long> countMenuQuantities(List<Menu> bilge) {
+        return bilge.stream()
+                .collect(Collectors.groupingBy(menu -> menu, Collectors.counting()));
+    }
 
+    public void printMenuQuantities() {
+        bilgeMap.forEach((menu, quantity) -> System.out.println(menu + ": " + quantity));
+    }
 }

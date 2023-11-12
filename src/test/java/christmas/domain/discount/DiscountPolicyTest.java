@@ -2,13 +2,14 @@ package christmas.domain.discount;
 
 import christmas.domain.Bilge;
 import christmas.domain.Menu;
+import christmas.service.DiscountService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public class DiscountPolicyTest {
 
@@ -16,16 +17,15 @@ public class DiscountPolicyTest {
     @Test
     void weekdayDiscountPolicyTest() {
         // given
-        List<Menu> bilgeCase1 = List.of(Menu.CHOCOCAKE);
+        Map<Menu,Integer> bilgeCase1 = Map.of(Menu.CHOCOCAKE,2);
         LocalDate today = LocalDate.of(2023,12,1);
         Bilge bilge = new Bilge(today,bilgeCase1);
         DiscountPolicy discountPolicy = new WeekdayDiscountPolicy();
-
         // when
-        int discount = discountPolicy.discount(bilge, Menu.CHOCOCAKE.getPrice());
+        int discount = discountPolicy.discount(bilge);
 
         // then
-        Assertions.assertThat(discount).isEqualTo(12977);
+        Assertions.assertThat(discount).isEqualTo(4046);
     }
 
 
@@ -33,17 +33,20 @@ public class DiscountPolicyTest {
     @Test
     void weekendDiscountPolicyTest() {
         // given
-        List<Menu> bilgeCase1 = List.of(Menu.BARBECUERIB);
-        LocalDate today = LocalDate.of(2023,12,1);
+        Map<Menu,Integer> bilgeCase1 = Map.of(Menu.TIBONESTEAK,2);
+        LocalDate today = LocalDate.of(2023,12,3);
         Bilge bilge = new Bilge(today,bilgeCase1);
         DiscountPolicy discountPolicy = new WeekendDiscountPolicy();
 
         // when
-        int discount = discountPolicy.discount(bilge, Menu.BARBECUERIB.getPrice());
+        int discount = discountPolicy.discount(bilge);
 
         // then
-        Assertions.assertThat(discount).isEqualTo(51977);
+        Assertions.assertThat(discount).isEqualTo(4046);
     }
+
+
+
 
 
 }
