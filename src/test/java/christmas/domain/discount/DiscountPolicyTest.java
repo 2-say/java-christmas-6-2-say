@@ -18,7 +18,7 @@ public class DiscountPolicyTest {
     void weekdayDiscountPolicyTest() {
         // given
         Map<Menu,Integer> bilgeCase1 = Map.of(Menu.CHOCOCAKE,2);
-        LocalDate today = LocalDate.of(2023,12,1);
+        LocalDate today = LocalDate.of(2023,12,3);
         Bilge bilge = new Bilge(today,bilgeCase1);
         DiscountPolicy discountPolicy = new WeekdayDiscountPolicy();
         // when
@@ -34,7 +34,7 @@ public class DiscountPolicyTest {
     void weekendDiscountPolicyTest() {
         // given
         Map<Menu,Integer> bilgeCase1 = Map.of(Menu.TIBONESTEAK,2);
-        LocalDate today = LocalDate.of(2023,12,3);
+        LocalDate today = LocalDate.of(2023,12,2);
         Bilge bilge = new Bilge(today,bilgeCase1);
         DiscountPolicy discountPolicy = new WeekendDiscountPolicy();
 
