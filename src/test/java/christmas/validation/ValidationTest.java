@@ -1,11 +1,18 @@
 package christmas.validation;
 
+import christmas.domain.Menu;
 import christmas.utils.Utils;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ValidationTest {
 
@@ -33,6 +40,7 @@ public class ValidationTest {
         assertThat(result3).isInstanceOf(IllegalArgumentException.class);
     }
 
+    @DisplayName("String to int 검증 테스트")
     @Test
     void validateStringToInteger_Test() {
         // given
@@ -45,7 +53,33 @@ public class ValidationTest {
         assertThat(result).isInstanceOf(IllegalArgumentException.class);
     }
 
+    @DisplayName("메뉴 중복 이름 입력 검증 테스트")
+    @Test
+    void checkDuplicateMenuNameTest() {
+        String entry = "타파스-2,제로콜라-3,타파스-2";
 
+        // when
+        Throwable result = catchThrowable(() -> {
+            Utils.processEntry(entry);
+        });
+
+        // then
+        assertThat(result).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("없는 메뉴 이름 입력 검증 테스트")
+    @Test
+    void notFoundMenuNameTest() {
+        String entry = "타바스-2,제로콜라-3";
+
+        // when
+        Throwable result = catchThrowable(() -> {
+            Utils.processEntry(entry);
+        });
+
+        // then
+        assertThat(result).isInstanceOf(IllegalArgumentException.class);
+    }
 
 
 }
