@@ -2,11 +2,11 @@ package christmas.service;
 
 import christmas.domain.Bilge;
 import christmas.domain.discount.*;
-import christmas.utils.DateUtils;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DiscountService {
     private Bilge bilge;
@@ -17,55 +17,48 @@ public class DiscountService {
     }
 
     public int applyDiscount() {
-        System.out.println(bilge.getDate());
-        if (isDecemberAndInRange(bilge.getDate(), 1, 31)) {
-            applyWeekdayDiscount();
-            applyWeekendDiscount();
-            applySpecialDiscount();
-        }
-        if (isChristmasSeason(bilge.getDate())) {
-            System.out.println("야기뇨");
-            discountPolicies.add(new ChristmasDiscountPolicy());
-        }
-        return calculateDiscountedPrice(bilge.getTotalPrice());
+        OngoingEventList();
+        cleanDiscount();
+        return calculateDiscountedPrice();
     }
 
-    public int calculateDiscountedPrice(int originalPrice) {
+    public Map<String, Integer> getDiscountDetails() {
+        Map<String, Integer> discountDetails = new HashMap<>();
+        discountPolicies.forEach(policy -> discountDetails.put(policy.getDescription(), policy.discount(bilge)));
+        return discountDetails;
+    }
+
+    public int calculateNoneChampagneDiscount() {
+        return discountPolicies.stream()
+                .filter(policy -> !(policy instanceof ChampagneDiscountPolicy))
+                .mapToInt(policy -> policy.discount(bilge))
+                .sum();
+    }
+
+    private void OngoingEventList() {
+        discountPolicies.add(new SpecialDiscountPolicy());
+        discountPolicies.add(new WeekendDiscountPolicy());
+        discountPolicies.add(new WeekdayDiscountPolicy());
+        discountPolicies.add(new ChristmasDiscountPolicy());
+        if (calculateDiscountedPrice() >= 120_000)
+            discountPolicies.add(new ChampagneDiscountPolicy());
+    }
+
+    private int cleanDiscount() {
+        discountPolicies.removeIf(policy -> policy.discount(bilge) == 0);
+        return calculateDiscountedPrice();
+    }
+
+    private int calculateDiscountedPrice() {
         return discountPolicies.stream()
                 .mapToInt(policy -> policy.discount(bilge))
                 .sum();
     }
 
-    private boolean isDecemberAndInRange(LocalDate date, int startDay, int endDay) {
-        return DateUtils.isDecember(date) && DateUtils.isDayOfMonthInRange(date, startDay, endDay);
+    public boolean hasChampagneDiscount() {
+        return discountPolicies.stream()
+                .anyMatch(policy -> policy instanceof ChampagneDiscountPolicy);
     }
-
-    private void applyWeekdayDiscount() {
-        if (DateUtils.isWeekday(bilge.getDate())) {
-            discountPolicies.add(new WeekdayDiscountPolicy());
-        }
-    }
-
-    private void applyWeekendDiscount() {
-        if (DateUtils.isWeekend(bilge.getDate())) {
-            discountPolicies.add(new WeekendDiscountPolicy());
-        }
-    }
-
-    private void applySpecialDiscount() {
-        if (DateUtils.isStarDay(bilge.getDate())) {
-            discountPolicies.add(new SpecialDiscountPolicy());
-        }
-    }
-
-    private boolean isChristmasSeason(LocalDate date) {
-        int dayOfMonth = date.getDayOfMonth();
-        return dayOfMonth >= 1 && dayOfMonth <= 25;
-    }
-
-
-
-
 
 
 }

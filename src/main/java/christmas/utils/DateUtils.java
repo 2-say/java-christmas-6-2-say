@@ -6,12 +6,8 @@ import java.time.Month;
 
 public class DateUtils {
 
-    public static boolean isDecember(LocalDate date) {
-        return date.getMonth() == Month.DECEMBER;
-    }
-
     public static boolean isWeekday(LocalDate date) {
-        return getDayOfWeekValue(date) >= DayOfWeek.SUNDAY.getValue() &&
+        return getDayOfWeekValue(date) >= DayOfWeek.SUNDAY.getValue() ||
                 getDayOfWeekValue(date) <= DayOfWeek.THURSDAY.getValue();
     }
 
@@ -32,4 +28,9 @@ public class DateUtils {
     public static boolean isStarDay(LocalDate date) {
         return getDayOfWeekValue(date) == DayOfWeek.SUNDAY.getValue() || date.getDayOfMonth() == 25;
     }
+
+    public static boolean isDecemberAndInRange(LocalDate date, int startDay, int endDay) {
+        return DateUtils.isDayOfMonthInRange(date, startDay, endDay);
+    }
+
 }
