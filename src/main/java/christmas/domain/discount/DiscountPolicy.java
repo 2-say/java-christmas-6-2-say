@@ -8,4 +8,6 @@ public interface DiscountPolicy {
      * @retrun 할인 대상 금액
      */
     int discount(Bilge bilge);
+
+    String getDescription();
 }
